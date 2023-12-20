@@ -276,7 +276,7 @@ fn test_generate(cl: &Client) {
         assert_eq!(blocks.len(), 4);
         let blocks = cl.generate(6, Some(45)).unwrap();
         assert_eq!(blocks.len(), 6);
-    } else if version() < 190000 {
+    } else if version() < 2029999 {
         assert_deprecated!(cl.generate(5, None));
     } else if version() < 210000 {
         assert_not_found!(cl.generate(5, None));
@@ -296,7 +296,7 @@ fn test_get_balance_generate_to_address(cl: &Client) {
 }
 
 fn test_get_balances_generate_to_address(cl: &Client) {
-    if version() >= 190000 {
+    if version() >= 2029999 {
         let initial = cl.get_balances().unwrap();
 
         let blocks = cl.generate_to_address(500, &cl.get_new_address(None, None).unwrap().assume_checked()).unwrap();
@@ -561,7 +561,7 @@ fn test_lock_unspent_unlock_unspent(cl: &Client) {
 
 fn test_get_block_filter(cl: &Client) {
     let blocks = cl.generate_to_address(7, &cl.get_new_address(None, None).unwrap().assume_checked()).unwrap();
-    if version() >= 190000 {
+    if version() >= 2029999 {
         let _ = cl.get_block_filter(&blocks[0]).unwrap();
     } else {
         assert_not_found!(cl.get_block_filter(&blocks[0]));
@@ -1100,7 +1100,7 @@ fn test_create_wallet(cl: &Client) {
         },
     ];
 
-    if version() >= 190000 {
+    if version() >= 2029999 {
         wallet_params.push(WalletParams {
             name: wallet_names[3],
             disable_private_keys: None,
@@ -1340,7 +1340,7 @@ fn test_get_descriptor_info(cl: &Client) {
     assert_eq!(res.has_private_keys, true);
 
     // Checksum introduced in: https://github.com/bitcoin/bitcoin/commit/26d3fad1093dfc697048313be7a96c9adf723654
-    if version() >= 190000 {
+    if version() >= 2029999 {
         assert_eq!(res.checksum, Some("37v3lm8x".to_string()));
     } else {
         assert!(res.checksum.is_none());
@@ -1390,7 +1390,7 @@ fn test_derive_addresses(cl: &Client) {
 fn test_get_mempool_info(cl: &Client) {
     let res = cl.get_mempool_info().unwrap();
 
-    if version() >= 190000 {
+    if version() >= 2029999 {
         assert!(res.loaded.is_some());
     } else {
         assert!(res.loaded.is_none());
